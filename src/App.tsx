@@ -38,6 +38,13 @@ import {
   CategoryList,
   CategoryShow,
 } from "./pages/categories";
+import {
+  CompanyList,
+  CompanyShow,
+  CompanyCreate,
+  CompanyEdit,
+} from "./pages/companies";
+import { JobList, JobCreate, JobEdit } from "./pages/jobs";
 import { ForgotPassword } from "./pages/forgotPassword";
 import { Login } from "./pages/login";
 import { Register } from "./pages/register";
@@ -51,7 +58,6 @@ const wsClient = createClient({ url: WS_URL });
 function App() {
   return (
     <BrowserRouter>
-      <GitHubBanner />
       <RefineKbarProvider>
         <ColorModeContextProvider>
           <AntdApp>
@@ -82,6 +88,19 @@ function App() {
                     meta: {
                       canDelete: true,
                     },
+                  },
+                  {
+                    name: "companies",
+                    list: "/companies",
+                    show: "/companies/show/:id",
+                    create: "/companies/create",
+                    edit: "/companies/edit/:id",
+                  },
+                  {
+                    name: "jobs",
+                    list: "/jobs",
+                    create: "/jobs/create",
+                    edit: "/jobs/edit/:id",
                   },
                 ]}
                 options={{
@@ -124,6 +143,23 @@ function App() {
                       <Route path="edit/:id" element={<CategoryEdit />} />
                       <Route path="show/:id" element={<CategoryShow />} />
                     </Route>
+                    <Route
+                      index
+                      element={<NavigateToResource resource="companies" />}
+                    />
+                    <Route path="/companies">
+                      <Route index element={<CompanyList />} />
+                      <Route path="show/:id" element={<CompanyShow />} />
+                      <Route path="create" element={<CompanyCreate />} />
+                      <Route path="edit/:id" element={<CompanyEdit />} />
+                    </Route>
+
+                    <Route path="/jobs">
+                      <Route index element={<JobList />} />
+                      <Route path="create" element={<JobCreate />} />
+                      <Route path="edit/:id" element={<JobEdit />} />
+                    </Route>
+                   
                     <Route path="*" element={<ErrorComponent />} />
                   </Route>
                   <Route
